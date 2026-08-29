@@ -70,34 +70,37 @@ function canvasNonBlank(canvas: HTMLCanvasElement) {
 }
 
 async function capturedFrameNonBlank(canvas: HTMLCanvasElement) {
-  await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-  if (canvasNonBlank(canvas)) return true;
   const gl = (canvas.getContext("webgl2") || canvas.getContext("webgl")) as WebGLRenderingContext | null;
-  if (!gl) return false;
-  try {
-    const pixel = new Uint8Array(4);
-    const colors = new Set<string>();
-    const steps = [0.08, 0.25, 0.42, 0.58, 0.75, 0.92];
-    for (const x of steps) {
-      for (const y of steps) {
-        gl.readPixels(
-          Math.min(canvas.width - 1, Math.floor(canvas.width * x)),
-          Math.min(canvas.height - 1, Math.floor(canvas.height * y)),
-          1,
-          1,
-          gl.RGBA,
-          gl.UNSIGNED_BYTE,
-          pixel,
-        );
-        colors.add(`${pixel[0]},${pixel[1]},${pixel[2]},${pixel[3]}`);
-        if (colors.size > 1) return true;
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    if (canvasNonBlank(canvas)) return true;
+    if (gl) {
+      try {
+        const pixel = new Uint8Array(4);
+        const colors = new Set<string>();
+        const steps = [0.08, 0.25, 0.42, 0.58, 0.75, 0.92];
+        for (const x of steps) {
+          for (const y of steps) {
+            gl.readPixels(
+              Math.min(canvas.width - 1, Math.floor(canvas.width * x)),
+              Math.min(canvas.height - 1, Math.floor(canvas.height * y)),
+              1,
+              1,
+              gl.RGBA,
+              gl.UNSIGNED_BYTE,
+              pixel,
+            );
+            colors.add(`${pixel[0]},${pixel[1]},${pixel[2]},${pixel[3]}`);
+            if (colors.size > 1) return true;
+          }
+        }
+      } catch (error) {
+        recordError(error);
       }
     }
-    return false;
-  } catch (error) {
-    recordError(error);
-    return canvasNonBlank(canvas);
+    await new Promise((resolve) => window.setTimeout(resolve, 100));
   }
+  return false;
 }
 
 function audioState() {

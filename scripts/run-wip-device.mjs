@@ -203,7 +203,12 @@ const report = {
   failures: [],
 };
 
-for (const systemId of systemIds) {
+// Start from the fixture-free gallery so a previous large Wasm instance can be
+// released before the first measured run. The same reset happens between cores.
+await navigate(baseURL.href);
+await delay(1_500);
+
+for (const [systemIndex, systemId] of systemIds.entries()) {
   const destination = new URL(`?system=${encodeURIComponent(systemId)}`, baseURL).href;
   let lastError;
   for (let attempt = 1; attempt <= 2; attempt += 1) {
@@ -225,7 +230,14 @@ for (const systemId of systemIds) {
         touchPoints: capabilities.touchPoints,
       };
       await connection.evaluate("document.querySelector('#launch-fixture').click()", { userGesture: true });
-      await waitFor(connection, "window.__EMULATION_LAB__.status === 'running'", `${systemId} core startup`);
+      await waitFor(
+        connection,
+        "['running', 'failed'].includes(window.__EMULATION_LAB__.status)",
+        `${systemId} core startup`,
+      );
+      const startup = JSON.parse(await connection.evaluate("JSON.stringify({status: window.__EMULATION_LAB__.status, errors: window.__EMULATION_LAB__.errors})"));
+      if (startup.status !== "running") throw new Error(`Core startup failed: ${startup.errors.join("; ") || "no browser error recorded"}`);
+      await delay(1_500);
       const result = await connection.evaluate("window.__EMULATION_LAB__.runSmokeTest(5000)", { awaitPromise: true });
       if (result.status !== "passed") throw new Error(`Smoke test returned ${result.status}`);
       report.results.push(result);
@@ -250,6 +262,10 @@ for (const systemId of systemIds) {
   if (lastError) {
     report.failures.push({ systemId, error: lastError instanceof Error ? lastError.message : String(lastError) });
     console.error(`${systemId}: ${lastError}`);
+  }
+  if (systemIndex < systemIds.length - 1) {
+    await navigate(baseURL.href);
+    await delay(1_500);
   }
 }
 

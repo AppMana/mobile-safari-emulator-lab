@@ -16,8 +16,9 @@ test("boots and measures the bundled NES fixture", async ({ page }) => {
   await page.goto("/?system=nes");
   await page.getByRole("button", { name: /Start 240p Test Suite/ }).click();
   await page.waitForFunction(() => window.__EMULATION_LAB__.status === "running", undefined, { timeout: 60_000 });
-  const result = await page.evaluate(() => window.__EMULATION_LAB__.runSmokeTest(2_000));
-  expect(result.status).toBe("passed");
+  await page.waitForTimeout(1_500);
+  const result = await page.evaluate(() => window.__EMULATION_LAB__.runSmokeTest(3_000));
+  expect(result, JSON.stringify(result, null, 2)).toMatchObject({ status: "passed", systemId: "nes" });
   expect(result.frameDelta).toBeGreaterThan(0);
   expect(result.canvas.nonBlank).toBe(true);
   expect(consoleErrors).toEqual([]);
