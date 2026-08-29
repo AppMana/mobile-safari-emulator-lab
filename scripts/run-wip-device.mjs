@@ -47,11 +47,11 @@ class WebKitConnection {
   }
 
   async open() {
+    this.socket.addEventListener("message", (event) => this.onMessage(event));
     await new Promise((resolve, reject) => {
       this.socket.addEventListener("open", resolve, { once: true });
       this.socket.addEventListener("error", reject, { once: true });
     });
-    this.socket.addEventListener("message", (event) => this.onMessage(event));
     const deadline = Date.now() + 15_000;
     while (!this.targetId && Date.now() < deadline) await delay(25);
     if (!this.targetId) throw new Error("WebKit did not announce a page target");

@@ -104,6 +104,13 @@ Override the URL, comma-separated systems, or output directory with positional
 arguments. The runner intentionally omits the device name, UDID, serial number,
 and account information.
 
+The repository includes a [sanitized iPadOS 26.5.2 run](reports/device-runs/2026-08-29/report.json)
+and paired page/framebuffer captures for DOS, NES, GBA, and PS1. All four public
+fixtures sustained 60 fps over their five-second samples. WebKit may record its
+initial denied autoplay attempt even after the runner resumes audio under an
+emulated user gesture; the report preserves that event and separately records the
+final audio state.
+
 ## Hosting requirements
 
 WebAssembly threads require a secure, cross-origin-isolated page. The preferred

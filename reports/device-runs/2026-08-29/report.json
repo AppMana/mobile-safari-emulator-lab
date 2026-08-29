@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-29T17:50:24.765Z",
+  "transport": "ios-webkit-debug-proxy / WebKit Inspector Protocol",
+  "target": {
+    "productType": "iPad16,5",
+    "osVersion": "26.5.2",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5.2 Safari/605.1.15",
+    "platform": "MacIntel",
+    "touchPoints": 5
+  },
+  "baseURL": "https://appmana.github.io/mobile-safari-emulator-lab/",
+  "results": [
+    {
+      "schemaVersion": 1,
+      "runId": "687fc4a8-6cea-4fbc-b466-f7cd8e8974f9",
+      "systemId": "dos",
+      "systemName": "DOS PC",
+      "core": "dosbox_pure",
+      "fixture": "DOS Lab VGA Demo",
+      "status": "passed",
+      "startedAt": "2026-08-29T17:50:33.507Z",
+      "completedAt": "2026-08-29T17:50:38.532Z",
+      "durationMs": 5000,
+      "frameDelta": 300,
+      "measuredFps": 60,
+      "canvas": {
+        "width": 2356,
+        "height": 1178,
+        "nonBlank": true
+      },
+      "audioState": "running",
+      "crossOriginIsolated": true,
+      "sharedArrayBuffer": true,
+      "webgl2": true,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5.2 Safari/605.1.15",
+      "errors": [
+        "NotAllowedError: Permission was denied"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "runId": "f5532fd2-03f2-4073-a203-8a068aafae80",
+      "systemId": "nes",
+      "systemName": "NES / Famicom",
+      "core": "fceumm",
+      "fixture": "240p Test Suite (NES)",
+      "status": "passed",
+      "startedAt": "2026-08-29T17:50:45.350Z",
+      "completedAt": "2026-08-29T17:50:50.357Z",
+      "durationMs": 5000,
+      "frameDelta": 300,
+      "measuredFps": 60,
+      "canvas": {
+        "width": 2356,
+        "height": 1178,
+        "nonBlank": true
+      },
+      "audioState": "running",
+      "crossOriginIsolated": true,
+      "sharedArrayBuffer": true,
+      "webgl2": true,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5.2 Safari/605.1.15",
+      "errors": [
+        "NotAllowedError: Permission was denied"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "runId": "a056bfd8-bdfc-46d2-9e06-3ce388baaeeb",
+      "systemId": "gba",
+      "systemName": "Game Boy Advance",
+      "core": "mgba",
+      "fixture": "240p Test Suite (GBA)",
+      "status": "passed",
+      "startedAt": "2026-08-29T17:50:57.139Z",
+      "completedAt": "2026-08-29T17:51:02.156Z",
+      "durationMs": 5000,
+      "frameDelta": 300,
+      "measuredFps": 60,
+      "canvas": {
+        "width": 2356,
+        "height": 1178,
+        "nonBlank": true
+      },
+      "audioState": "running",
+      "crossOriginIsolated": true,
+      "sharedArrayBuffer": true,
+      "webgl2": true,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5.2 Safari/605.1.15",
+      "errors": [
+        "NotAllowedError: Permission was denied"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "runId": "1a20580f-e114-4f0e-8bf9-c2293145942d",
+      "systemId": "ps1",
+      "systemName": "PlayStation",
+      "core": "pcsx_rearmed",
+      "fixture": "PS1 Lab GPU Demo",
+      "status": "passed",
+      "startedAt": "2026-08-29T17:51:08.941Z",
+      "completedAt": "2026-08-29T17:51:13.962Z",
+      "durationMs": 5000,
+      "frameDelta": 300,
+      "measuredFps": 60,
+      "canvas": {
+        "width": 2356,
+        "height": 1178,
+        "nonBlank": true
+      },
+      "audioState": "running",
+      "crossOriginIsolated": true,
+      "sharedArrayBuffer": true,
+      "webgl2": true,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5.2 Safari/605.1.15",
+      "errors": [
+        "NotAllowedError: Permission was denied"
+      ]
+    }
+  ],
+  "artifacts": [
+    {
+      "systemId": "dos",
+      "framebuffer": "dos-frame.png",
+      "page": "dos.png"
+    },
+    {
+      "systemId": "nes",
+      "framebuffer": "nes-frame.png",
+      "page": "nes.png"
+    },
+    {
+      "systemId": "gba",
+      "framebuffer": "gba-frame.png",
+      "page": "gba.png"
+    },
+    {
+      "systemId": "ps1",
+      "framebuffer": "ps1-frame.png",
+      "page": "ps1.png"
+    }
+  ],
+  "failures": [],
+  "completedAt": "2026-08-29T17:51:14.189Z"
+}
