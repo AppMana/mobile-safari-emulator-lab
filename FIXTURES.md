@@ -13,7 +13,7 @@ public build does not need to download a 76 MB cross-toolchain.
 | --- | --- | --- | --- |
 | `240pee.nes` | NES 240p Test Suite | [christopherpow/nes-test-roms](https://github.com/christopherpow/nes-test-roms) | `228a370b32daacec4c95927aa18243a57be2d45d1d038479ba9d4bb19d05985e` |
 | `240p-test-suite.gba` | GBA 240p Test Suite | [mechanize-work/gba-eval](https://github.com/mechanize-work/gba-eval) | `47844f7140738a06f8f3bc09780da3ab095539a250b870f614feed561d9d6f34` |
-| `dos-lab.zip` | generated DOS VGA text animation | [`fixtures-src/dos-lab.asm`](fixtures-src/dos-lab.asm) | `ea1e7afd6580e819d3fbee0d5025138e68176b80231a26d14fc5ddb9680c3f68` |
+| `dos-lab.zip` | generated DOS VGA text animation | [`fixtures-src/dos-lab.asm`](fixtures-src/dos-lab.asm) | `289157e99c18e7a83aa270a4d96efd7d6edaf47be6da8625fc110e7cf0560d1a` |
 | `ps1-lab.exe` | PSn00bSDK animated GPU proof | [`fixtures-src/ps1-lab`](fixtures-src/ps1-lab) | `74b1d679d7bae3860e9ef3756279705375c53d85bf47c4914dff08e01e38b687` |
 
 The DOS ZIP is deterministic and contains the checked-in source's 163-byte COM

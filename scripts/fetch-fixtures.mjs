@@ -4,6 +4,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { strToU8, zipSync } from "fflate";
 
+// fflate serializes ZIP timestamps through local-time Date accessors.
+// Force one timezone so fixture hashes are identical on developer and CI hosts.
+process.env.TZ = "UTC";
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const fixtureDir = path.join(root, "public", "fixtures");
 const fixtures = [
