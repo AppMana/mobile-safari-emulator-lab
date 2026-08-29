@@ -71,8 +71,9 @@ function canvasNonBlank(canvas: HTMLCanvasElement) {
 
 async function capturedFrameNonBlank(canvas: HTMLCanvasElement) {
   await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+  if (canvasNonBlank(canvas)) return true;
   const gl = (canvas.getContext("webgl2") || canvas.getContext("webgl")) as WebGLRenderingContext | null;
-  if (!gl) return canvasNonBlank(canvas);
+  if (!gl) return false;
   try {
     const pixel = new Uint8Array(4);
     const colors = new Set<string>();

@@ -34,7 +34,7 @@ files.
 | Game Boy Advance | `mgba` | 240p Test Suite | same |
 | Arcade | `mame2003_plus` | — | Circus |
 | DOS PC | `dosbox_pure` | generated VGA demo | same |
-| PlayStation | `pcsx_rearmed` | Tetrade | same |
+| PlayStation | `pcsx_rearmed` | PS1 Lab GPU Demo | same |
 
 This is a representative production tier, not a claim that every game in each
 catalog behaves identically. Each new title still needs media, input, save, audio,

@@ -139,13 +139,13 @@ export const systems: SystemDefinition[] = [
     threads: false,
     description: "PCSX-ReARMed; the high-end production-tier latency and throughput proof.",
     fixture: {
-      file: "TETRADE_PSX.cue",
-      title: "Tetrade",
-      source: "https://github.com/Logan-Campbell/Tetrade/releases/download/v1.0/TETRADE_PSX.cue",
-      sha256: "98cb45d15241900c8459176e833be5edee78120763ac4d91d79d24020b10d67a",
+      file: "ps1-lab.exe",
+      title: "PS1 Lab GPU Demo",
+      source: "fixtures-src/ps1-lab/main.c",
+      sha256: "74b1d679d7bae3860e9ef3756279705375c53d85bf47c4914dff08e01e38b687",
       bundled: true,
     },
-    notes: "Tetrade is an MIT-licensed PS1 homebrew game. The CUE launches its adjacent BIN track, and PCSX-ReARMed uses its HLE BIOS.",
+    notes: "The MPL-2.0 PSn00bSDK fixture renders identifying text and an animated tile through the emulated GPU without a proprietary BIOS.",
   },
 ];
 

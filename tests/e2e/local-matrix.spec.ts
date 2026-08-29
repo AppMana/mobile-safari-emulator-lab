@@ -10,7 +10,7 @@ const matrix = [
   ["gba", "240p Test Suite"],
   ["arcade", "Circus"],
   ["dos", "DOS Lab VGA Demo"],
-  ["ps1", "Tetrade"],
+  ["ps1", "PS1 Lab GPU Demo"],
 ] as const;
 
 for (const [systemId, fixtureName] of matrix) {

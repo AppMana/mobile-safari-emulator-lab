@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { strToU8, zipSync } from "fflate";
@@ -17,19 +17,9 @@ const fixtures = [
     url: "https://raw.githubusercontent.com/mechanize-work/gba-eval/main/corpus/roms/test/misc/240p-test-suite.gba",
     sha256: "47844f7140738a06f8f3bc09780da3ab095539a250b870f614feed561d9d6f34",
   },
-  {
-    file: "TETRADE_PSX.bin",
-    url: "https://github.com/Logan-Campbell/Tetrade/releases/download/v1.0/TETRADE_PSX.bin",
-    sha256: "2f41feba2023cbdcd9c1c3d4cfc3d8d1a7f1a2de0afea2e7a050b84640d6eaf8",
-  },
-  {
-    file: "TETRADE_PSX.cue",
-    url: "https://api.github.com/repos/Logan-Campbell/Tetrade/releases/assets/217531351",
-    sha256: "98cb45d15241900c8459176e833be5edee78120763ac4d91d79d24020b10d67a",
-    headers: { Accept: "application/octet-stream" },
-  },
 ];
 
+await rm(fixtureDir, { recursive: true, force: true });
 await mkdir(fixtureDir, { recursive: true });
 for (const fixture of fixtures) {
   const response = await fetch(fixture.url, { redirect: "follow", headers: fixture.headers });
@@ -61,4 +51,18 @@ manifest.push({
   sha256: createHash("sha256").update(dosData).digest("hex"),
   bytes: dosData.length,
 });
+
+const ps1Fixture = {
+  file: "ps1-lab.exe",
+  url: "fixtures-src/ps1-lab/main.c",
+  sha256: "74b1d679d7bae3860e9ef3756279705375c53d85bf47c4914dff08e01e38b687",
+};
+const ps1Data = await readFile(path.join(root, "fixtures-src", "ps1-lab", ps1Fixture.file));
+const ps1Digest = createHash("sha256").update(ps1Data).digest("hex");
+if (ps1Digest !== ps1Fixture.sha256) {
+  throw new Error(`${ps1Fixture.file} checksum mismatch: expected ${ps1Fixture.sha256}, got ${ps1Digest}`);
+}
+await writeFile(path.join(fixtureDir, ps1Fixture.file), ps1Data);
+manifest.push({ ...ps1Fixture, bytes: ps1Data.length });
+console.log(`${ps1Fixture.file} ${ps1Digest}`);
 await writeFile(path.join(fixtureDir, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
