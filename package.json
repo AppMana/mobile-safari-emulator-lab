@@ -1,0 +1,53 @@
+{
+  "name": "mobile-safari-emulator-lab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A reproducible local-Wasm emulator matrix and evidence harness for Mobile Safari.",
+  "homepage": "https://appmana.github.io/mobile-safari-emulator-lab/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AppMana/mobile-safari-emulator-lab.git"
+  },
+  "bugs": "https://github.com/AppMana/mobile-safari-emulator-lab/issues",
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "prepare:assets": "node scripts/stage-emulatorjs.mjs && node scripts/fetch-fixtures.mjs",
+    "fixtures:local": "node scripts/fetch-local-fixtures.mjs",
+    "postinstall": "npm run prepare:assets",
+    "dev": "vite --host 0.0.0.0",
+    "build": "npm run prepare:assets && tsc --noEmit && vite build",
+    "build:local": "npm run prepare:assets && npm run fixtures:local && tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "check": "npm test && npm run build"
+  },
+  "dependencies": {
+    "@emulatorjs/core-dosbox_pure": "4.2.3",
+    "@emulatorjs/core-fceumm": "4.2.3",
+    "@emulatorjs/core-genesis_plus_gx": "4.2.3",
+    "@emulatorjs/core-mame2003_plus": "4.2.3",
+    "@emulatorjs/core-mgba": "4.2.3",
+    "@emulatorjs/core-pcsx_rearmed": "4.2.3",
+    "@emulatorjs/core-snes9x": "4.2.3",
+    "@emulatorjs/core-stella2014": "4.2.3",
+    "@emulatorjs/core-vice_x64sc": "4.2.3",
+    "@emulatorjs/emulatorjs": "4.2.3",
+    "coi-serviceworker": "0.1.7",
+    "fflate": "0.8.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "@types/node": "24.3.0",
+    "typescript": "5.9.2",
+    "vite": "7.3.6",
+    "vitest": "3.2.7"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "overrides": {
+    "glob": "13.0.6"
+  }
+}

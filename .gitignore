@@ -1,0 +1,13 @@
+node_modules/
+dist/
+public/vendor/
+public/fixtures/
+test-results/
+playwright-report/
+reports/device-runs/*
+!reports/device-runs/.gitkeep
+!reports/device-runs/*/
+!reports/device-runs/*/*.json
+!reports/device-runs/*/*.png
+.DS_Store
+*.log

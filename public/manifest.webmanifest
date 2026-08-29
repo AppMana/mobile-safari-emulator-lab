@@ -1,0 +1,10 @@
+{
+  "name": "Mobile Safari Emulator Lab",
+  "short_name": "Emulator Lab",
+  "description": "A reproducible, local-Wasm emulation matrix for Mobile Safari.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#08101f",
+  "theme_color": "#101727",
+  "icons": []
+}
