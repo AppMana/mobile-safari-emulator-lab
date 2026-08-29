@@ -33,7 +33,7 @@ for (const fixture of fixtures) {
   console.log(`${fixture.file} ${digest}`);
 }
 
-const dosProgram = Buffer.from("uBMAzRC4AKCOwDHbMf+5APqJ+DDgANiq4vf+w+RgPAF16rgDAM0Qww==", "base64");
+const dosProgram = Buffer.from("/LgDAM0QuAC4jsAx/7ggH7nQB/OrvmsBv5oEtB/oQgC+fwG/2gXoOQC+lQG/ggvoMAAx27raA+yoCHX77KgIdPu/SAi5KACw24jcgOQHgMQJq+L9/sPkYDwBddi4AwDNEMOshMB0A6vr+MNNT0JJTEUgU0FGQVJJIC8gRE9TAExPQ0FMIFdBU00gVkdBIE9VVFBVVABFU0MgVE8gUkVUVVJOAA==", "base64");
 const dosArchive = zipSync({
   "LAB.COM": new Uint8Array(dosProgram),
   "AUTOEXEC.BAT": strToU8("@echo off\r\nLAB.COM\r\n"),

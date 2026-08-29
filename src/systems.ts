@@ -126,7 +126,7 @@ export const systems: SystemDefinition[] = [
       file: "dos-lab.zip",
       title: "DOS Lab VGA Demo",
       source: "fixtures-src/dos-lab.asm",
-      sha256: "75e719b7396b7fb54d7ffb442ccf7220d4e5cd9db938e6850e138a97e214f7f2",
+      sha256: "ea1e7afd6580e819d3fbee0d5025138e68176b80231a26d14fc5ddb9680c3f68",
       bundled: true,
     },
   },

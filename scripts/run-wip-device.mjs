@@ -52,7 +52,7 @@ class WebKitConnection {
       this.socket.addEventListener("error", reject, { once: true });
     });
     this.socket.addEventListener("message", (event) => this.onMessage(event));
-    const deadline = Date.now() + 5_000;
+    const deadline = Date.now() + 15_000;
     while (!this.targetId && Date.now() < deadline) await delay(25);
     if (!this.targetId) throw new Error("WebKit did not announce a page target");
     return this;
@@ -133,8 +133,19 @@ async function navigate(destination) {
   return matchingPage(destination, true);
 }
 
-async function waitFor(connection, expression, description) {
-  const deadline = Date.now() + timeoutMs;
+async function resetToGallery() {
+  const navigated = await navigate(baseURL.href);
+  const connection = await new WebKitConnection(navigated.page.webSocketDebuggerUrl).open();
+  try {
+    await connection.command("Heap.gc", {}, 5_000);
+  } finally {
+    connection.close();
+  }
+  await delay(1_500);
+}
+
+async function waitFor(connection, expression, description, waitMs = timeoutMs) {
+  const deadline = Date.now() + waitMs;
   while (Date.now() < deadline) {
     try {
       if (await connection.evaluate(expression)) return;
@@ -142,6 +153,30 @@ async function waitFor(connection, expression, description) {
     await delay(250);
   }
   throw new Error(`Timed out waiting for ${description}`);
+}
+
+async function resumeEmulator(connection) {
+  await connection.evaluate(`(async () => {
+    const emulator = window.EJS_emulator;
+    const resumeButton = [...document.querySelectorAll('button')]
+      .find((button) => button.textContent?.includes('Click to resume Emulator'));
+    resumeButton?.click();
+    const contexts = new Set();
+    const al = emulator?.Module?.AL?.currentCtx;
+    if (al?.audioCtx) contexts.add(al.audioCtx);
+    al?.sources?.forEach((source) => contexts.add(source?.gain?.context));
+    await Promise.race([
+      Promise.allSettled([...contexts].filter(Boolean).map((context) => context.resume())),
+      new Promise((resolve) => setTimeout(resolve, 1_000)),
+    ]);
+    emulator?.play?.();
+  })()`, { userGesture: true, awaitPromise: true });
+  await waitFor(
+    connection,
+    "Number(window.EJS_emulator?.gameManager?.getFrameNum?.() || 0) > 0",
+    "the emulator to advance its first frame",
+    10_000,
+  );
 }
 
 async function snapshot(connection, filename) {
@@ -205,8 +240,7 @@ const report = {
 
 // Start from the fixture-free gallery so a previous large Wasm instance can be
 // released before the first measured run. The same reset happens between cores.
-await navigate(baseURL.href);
-await delay(1_500);
+await resetToGallery();
 
 for (const [systemIndex, systemId] of systemIds.entries()) {
   const destination = new URL(`?system=${encodeURIComponent(systemId)}`, baseURL).href;
@@ -237,9 +271,10 @@ for (const [systemIndex, systemId] of systemIds.entries()) {
       );
       const startup = JSON.parse(await connection.evaluate("JSON.stringify({status: window.__EMULATION_LAB__.status, errors: window.__EMULATION_LAB__.errors})"));
       if (startup.status !== "running") throw new Error(`Core startup failed: ${startup.errors.join("; ") || "no browser error recorded"}`);
-      await delay(1_500);
+      await resumeEmulator(connection);
+      await delay(1_000);
       const result = await connection.evaluate("window.__EMULATION_LAB__.runSmokeTest(5000)", { awaitPromise: true });
-      if (result.status !== "passed") throw new Error(`Smoke test returned ${result.status}`);
+      if (result.status !== "passed") throw new Error(`Smoke test returned ${result.status}: ${JSON.stringify(result)}`);
       report.results.push(result);
       await snapshotFramebuffer(connection, path.join(outputDirectory, `${systemId}-frame.png`));
       await snapshot(connection, path.join(outputDirectory, `${systemId}.png`));
@@ -264,8 +299,7 @@ for (const [systemIndex, systemId] of systemIds.entries()) {
     console.error(`${systemId}: ${lastError}`);
   }
   if (systemIndex < systemIds.length - 1) {
-    await navigate(baseURL.href);
-    await delay(1_500);
+    await resetToGallery();
   }
 }
 
