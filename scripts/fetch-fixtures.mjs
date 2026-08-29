@@ -22,11 +22,17 @@ const fixtures = [
     url: "https://github.com/Logan-Campbell/Tetrade/releases/download/v1.0/TETRADE_PSX.bin",
     sha256: "2f41feba2023cbdcd9c1c3d4cfc3d8d1a7f1a2de0afea2e7a050b84640d6eaf8",
   },
+  {
+    file: "TETRADE_PSX.cue",
+    url: "https://api.github.com/repos/Logan-Campbell/Tetrade/releases/assets/217531351",
+    sha256: "98cb45d15241900c8459176e833be5edee78120763ac4d91d79d24020b10d67a",
+    headers: { Accept: "application/octet-stream" },
+  },
 ];
 
 await mkdir(fixtureDir, { recursive: true });
 for (const fixture of fixtures) {
-  const response = await fetch(fixture.url, { redirect: "follow" });
+  const response = await fetch(fixture.url, { redirect: "follow", headers: fixture.headers });
   if (!response.ok) throw new Error(`Failed to fetch ${fixture.url}: ${response.status}`);
   const data = Buffer.from(await response.arrayBuffer());
   const digest = createHash("sha256").update(data).digest("hex");

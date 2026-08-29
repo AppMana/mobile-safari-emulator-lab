@@ -11,7 +11,8 @@ Build scripts fetch or generate exact inputs and verify SHA-256 checksums.
 | --- | --- | --- | --- |
 | `240pee.nes` | NES 240p Test Suite | [christopherpow/nes-test-roms](https://github.com/christopherpow/nes-test-roms) | `228a370b32daacec4c95927aa18243a57be2d45d1d038479ba9d4bb19d05985e` |
 | `240p-test-suite.gba` | GBA 240p Test Suite | [mechanize-work/gba-eval](https://github.com/mechanize-work/gba-eval) | `47844f7140738a06f8f3bc09780da3ab095539a250b870f614feed561d9d6f34` |
-| `TETRADE_PSX.bin` | MIT-licensed PS1 homebrew | [Tetrade v1.0](https://github.com/Logan-Campbell/Tetrade/releases/tag/v1.0) | `2f41feba2023cbdcd9c1c3d4cfc3d8d1a7f1a2de0afea2e7a050b84640d6eaf8` |
+| `TETRADE_PSX.cue` | PS1 disc descriptor | [Tetrade v1.0](https://github.com/Logan-Campbell/Tetrade/releases/tag/v1.0) | `98cb45d15241900c8459176e833be5edee78120763ac4d91d79d24020b10d67a` |
+| `TETRADE_PSX.bin` | MIT-licensed PS1 homebrew track | [Tetrade v1.0](https://github.com/Logan-Campbell/Tetrade/releases/tag/v1.0) | `2f41feba2023cbdcd9c1c3d4cfc3d8d1a7f1a2de0afea2e7a050b84640d6eaf8` |
 | `dos-lab.zip` | generated DOS VGA animation | [`fixtures-src/dos-lab.asm`](fixtures-src/dos-lab.asm) | `75e719b7396b7fb54d7ffb442ccf7220d4e5cd9db938e6850e138a97e214f7f2` |
 
 The DOS ZIP is deterministic and contains the checked-in source's 40-byte COM

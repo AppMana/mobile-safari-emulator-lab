@@ -92,6 +92,18 @@ Audio on iOS is gesture-gated. Start the fixture by tapping its button before
 measuring. A physical-controller or touch-input run still needs a brief human
 check; frame and canvas tests cannot prove that every control mapping feels right.
 
+With `ios-webkit-debug-proxy` exposing one attached device at its default discovery
+endpoint, the checked-in runner drives the public fixtures through the native
+WebKit Inspector Protocol and writes sanitized JSON plus PNG evidence:
+
+```sh
+IPAD_PRODUCT_TYPE=iPad16,5 npm run device:wip
+```
+
+Override the URL, comma-separated systems, or output directory with positional
+arguments. The runner intentionally omits the device name, UDID, serial number,
+and account information.
+
 ## Hosting requirements
 
 WebAssembly threads require a secure, cross-origin-isolated page. The preferred
